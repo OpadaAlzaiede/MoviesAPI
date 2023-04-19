@@ -15,7 +15,13 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
+            $table->integer('length')->comment('movie length in seconds');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->index('category_id');
         });
     }
 
