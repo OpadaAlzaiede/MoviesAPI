@@ -17,9 +17,10 @@ class CreateRatesTable extends Migration
             $table->id();
             $table->double('rate');
             $table->dateTime('date');
-            $table->ipAddress('ip');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('movie_id');
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('movie_id')->references('id')->on('movies');
         });
     }

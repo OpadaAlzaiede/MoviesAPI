@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('categories', CategoryController::class);
+// AUTH ROUTES
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('logout', [AuthController::class, 'logout']);
 
-Route::post('/movies/{id}/rate', [MovieController::class, 'rate']);
-Route::patch('/movies/{id}/rate', [MovieController::class, 'updateRate']);
-Route::resource('movies', MovieController::class);
+Route::middleware('auth:api')->group(function() {
+
+    Route::resource('categories', CategoryController::class);
+
+    Route::post('/movies/{movie}/rate', [MovieController::class, 'rate'])->can('rate', 'movie');
+    Route::patch('/movies/{movie}/rate', [MovieController::class, 'updateRate']);
+    Route::resource('movies', MovieController::class);
+});

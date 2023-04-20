@@ -69,33 +69,16 @@ class MovieController extends Controller
         return $this->success([], 'Deleted Successfully !');
     }
 
-    public function rate(RateMovieRequest $request, $id) {
+    public function rate(RateMovieRequest $request, Movie $movie, Rate $rate) {
 
-        $movie = Movie::find($id);
-
-        if(!$movie) return $this->error(404, 'Not Found !');
-
-        $ipAddress = $request->ip();
-
-        if(!$this->checkForOldRate($ipAddress, $id)) return $this->error(401, "You can't rate this movie !");
-
-        $rate = new Rate($request->validated());
+        $rate->fill($request->validated());
         $rate->date = Carbon::now();
         $rate->ip = $request->ip();
-        $rate->movie_id = $id;
+        $rate->movie_id = $movie->id;
         $rate->save();
 
         $movie->updateRate($rate->rate);
 
         return $this->resource($movie->load(['category', 'rates']));
-    }
-
-    private function checkForOldRate($ipAddress, $movieId) {
-
-        $oldRate = Rate::where('movie_id', $movieId)
-                        ->where('ip', $ipAddress)
-                        ->first();
-
-        return is_null($oldRate);
     }
 }
