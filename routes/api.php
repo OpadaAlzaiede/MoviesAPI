@@ -16,4 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('categories', CategoryController::class);
+
+Route::post('/movies/{id}/rate', [MovieController::class, 'rate']);
+Route::patch('/movies/{id}/rate', [MovieController::class, 'updateRate']);
 Route::resource('movies', MovieController::class);

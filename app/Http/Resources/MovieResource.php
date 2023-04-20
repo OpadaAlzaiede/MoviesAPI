@@ -23,6 +23,7 @@ class MovieResource extends JsonResource
             'date' => $this->date,
             'rate' => $this->rate,
             'category' => $this->whenLoaded('category'),
+            'rates' => $this->whenLoaded('rates')
         ];
     }
 }

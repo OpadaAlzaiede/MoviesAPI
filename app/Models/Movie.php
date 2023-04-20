@@ -28,4 +28,10 @@ class Movie extends Model
 
         return $this->morphMany(Attachment::class, 'attachable');
     }
+
+    public function updateRate($rate) {
+
+        $this->rate = ($this->rate + $rate) / 2;
+        $this->save();
+    }
 }
