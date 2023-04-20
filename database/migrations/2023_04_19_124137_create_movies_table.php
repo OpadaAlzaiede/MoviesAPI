@@ -16,10 +16,12 @@ class CreateMoviesTable extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->integer('length')->comment('movie length in seconds');
+            $table->integer('hours');
+            $table->integer('minutes');
+            $table->integer('seconds');
             $table->unsignedBigInteger('category_id');
-            $table->dateTime('added_at');
-            $table->double('rate');
+            $table->dateTime('date');
+            $table->double('rate')->default(0);
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->index('category_id');
