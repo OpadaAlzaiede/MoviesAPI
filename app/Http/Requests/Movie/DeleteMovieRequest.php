@@ -3,12 +3,11 @@
 namespace App\Http\Requests\Movie;
 
 use App\Http\Traits\JsonErrors;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMovieRequest extends FormRequest
+class DeleteMovieRequest extends FormRequest
 {
     use JsonErrors;
     /**
@@ -29,12 +28,7 @@ class UpdateMovieRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['max:100', Rule::unique('movies', 'name')->ignore($this->route('movie'))],
-            'hours' => ['numeric', 'min:1'],
-            'minutes' => ['numeric', 'min:0', 'max:59'],
-            'seconds' => ['numeric', 'min:0', 'max:59'],
-            'date' => ['required', 'date'],
-            'category_id' => [Rule::exists('categories', 'id')]
+            //
         ];
     }
 }

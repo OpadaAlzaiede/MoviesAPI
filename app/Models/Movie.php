@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class Movie extends Model
 {
@@ -33,5 +34,21 @@ class Movie extends Model
 
         $this->rate = ($this->rate + $rate) / 2;
         $this->save();
+    }
+
+    public static function allowedIncludes() {
+
+        return [
+            'category',
+            'rates'
+        ];
+    }
+    public static function allowedFilters() {
+
+        return [
+            'name',
+            'category.name',
+            AllowedFilter::exact('rate')
+        ];
     }
 }

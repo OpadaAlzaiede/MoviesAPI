@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Movie\DeleteMovieRequest;
 use App\Http\Requests\Movie\RateMovieRequest;
 use App\Http\Requests\Movie\StoreMovieRequest;
 use App\Http\Requests\Movie\UpdateMovieRequest;
@@ -23,8 +24,8 @@ class MovieController extends Controller
     public function index() {
 
         $movies = QueryBuilder::for(Movie::class)
-                            ->allowedIncludes(['category', 'rates'])
-                            ->allowedFilters(['name', 'category.name', AllowedFilter::exact('rate')])
+                            ->allowedIncludes(Movie::allowedIncludes())
+                            ->allowedFilters(Movie::allowedFilters())
                             ->defaultSort('-id')
                             ->paginate($this->perPage, ['*'], 'page', $this->page);
 
@@ -58,7 +59,7 @@ class MovieController extends Controller
         return $movie->load('category');
     }
 
-    public function destroy($id) {
+    public function destroy(DeleteMovieRequest $request, $id) {
 
         $movie = Movie::find($id);
 

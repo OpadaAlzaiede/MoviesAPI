@@ -23,8 +23,8 @@ class CategoryController extends Controller
     public function index() {
 
         $categories =QueryBuilder::for(Category::class)
-                                ->allowedIncludes(['movies'])
-                                ->allowedFilters(['name'])
+                                ->allowedIncludes(Category::allowedIncludes())
+                                ->allowedFilters(Category::allowedFilters())
                                 ->defaultSort('-id')
                                 ->paginate($this->perPage, ['*'], 'page', $this->page);
 

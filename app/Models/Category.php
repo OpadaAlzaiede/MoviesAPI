@@ -38,4 +38,17 @@ class Category extends Model
 
         return $this->morphMany(Attachment::class, 'attachable');
     }
+
+    public static function allowedIncludes() {
+
+        return [
+            'movies',
+        ];
+    }
+    public static function allowedFilters() {
+
+        return [
+            'name',
+        ];
+    }
 }
