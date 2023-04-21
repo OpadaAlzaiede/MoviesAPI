@@ -30,7 +30,10 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:100', Rule::unique('categories', 'name')]
+            'name' => ['required', 'max:100', Rule::unique('categories', 'name')],
+            'images' => ['required', 'array'],
+            'images.*.title' => ['required', 'string', 'max:100'],
+            'images.*.image' => ['required', 'file', 'mimes:jpg,png,jfif', 'max:10000']
         ];
     }
 }

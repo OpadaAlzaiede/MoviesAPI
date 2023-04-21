@@ -9,6 +9,8 @@ class Attachment extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public const MORPHS = [
         1 => Movie::class,
         2 => Category::class
