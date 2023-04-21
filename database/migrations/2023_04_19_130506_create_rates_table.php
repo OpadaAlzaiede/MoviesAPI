@@ -22,6 +22,8 @@ class CreateRatesTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('movie_id')->references('id')->on('movies');
+
+            $table->index(['user_id', 'movie_id']);
         });
     }
 

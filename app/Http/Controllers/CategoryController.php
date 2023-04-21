@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\DeleteCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -47,6 +49,8 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, $id) {
 
+        $this->authorize('update', Category::class);
+
         $category = Category::find($id);
 
         if(!$category) return $this->error(404, 'Not Found !');
@@ -56,7 +60,7 @@ class CategoryController extends Controller
         return $this->resource($category->load(Category::getIncludes()));
     }
 
-    public function destroy($id) {
+    public function destroy(DeleteCategoryRequest $request, $id) {
 
         $category = Category::find($id);
 

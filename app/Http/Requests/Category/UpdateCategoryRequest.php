@@ -3,8 +3,10 @@
 namespace App\Http\Requests\Category;
 
 use App\Http\Traits\JsonErrors;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -16,7 +18,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::user()->hasRole(Config::get('constants.ADMIN_ROLE'));
     }
 
     /**

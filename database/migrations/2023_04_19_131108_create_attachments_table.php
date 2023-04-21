@@ -16,8 +16,8 @@ class CreateAttachmentsTable extends Migration
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
             $table->string('title', 100);
-            $table->morphs('attachable');
             $table->string('path');
+            $table->morphs('attachable');
         });
     }
 

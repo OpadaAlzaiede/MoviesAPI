@@ -16,16 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// AUTH ROUTES
+// AUTH ENDPOINTS
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-Route::post('logout', [AuthController::class, 'logout']);
 
-Route::middleware('auth:api')->group(function() {
 
+Route::middleware(['auth:sanctum','auth:api'])->group(static function() {
+
+    // CATEGORY RESOURCE ENDPOINTS
     Route::resource('categories', CategoryController::class);
 
+    // MOVIE RESOURCE ENDPOINTS
     Route::post('/movies/{movie}/rate', [MovieController::class, 'rate'])->can('rate', 'movie');
     Route::patch('/movies/{movie}/rate', [MovieController::class, 'updateRate']);
     Route::resource('movies', MovieController::class);
+
+    Route::post('logout', [AuthController::class, 'logout']);
 });

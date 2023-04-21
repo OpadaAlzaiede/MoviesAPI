@@ -3,13 +3,11 @@
 namespace App\Http\Requests\Category;
 
 use App\Http\Traits\JsonErrors;
-use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Auth\Access\AuthorizationException;
 
-class StoreCategoryRequest extends FormRequest
+class DeleteCategoryRequest extends FormRequest
 {
     use JsonErrors;
     /**
@@ -30,7 +28,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:100', Rule::unique('categories', 'name')]
+            //
         ];
     }
 }

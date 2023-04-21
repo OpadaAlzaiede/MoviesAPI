@@ -77,7 +77,7 @@ class MovieController extends Controller
         $rate->movie_id = $movie->id;
         $rate->save();
 
-        $movie->updateRate($rate->rate);
+        $movie->calcNewRate($rate->rate);
 
         return $this->resource($movie->load(['category', 'rates']));
     }
