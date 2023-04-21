@@ -38,14 +38,14 @@ class MovieController extends Controller
 
         if(!$movie) return $this->error(404, 'Not Found !');
 
-        return $movie->load('category');
+        return $movie->load(Movie::allowedIncludes());
     }
 
     public function store(StoreMovieRequest $request) {
 
         $movie = Movie::create($request->validated());
 
-        return $this->resource($movie->load('category'));
+        return $this->resource($movie->load(Movie::allowedIncludes()));
     }
 
     public function update(UpdateMovieRequest $request, $id) {
@@ -56,7 +56,7 @@ class MovieController extends Controller
 
         $movie->update($request->validated());
 
-        return $movie->load('category');
+        return $movie->load(Movie::allowedIncludes());
     }
 
     public function destroy(DeleteMovieRequest $request, $id) {
@@ -80,6 +80,6 @@ class MovieController extends Controller
 
         $movie->calcNewRate($rate->rate);
 
-        return $this->resource($movie->load(['category', 'rates']));
+        return $this->resource($movie->load(Movie::allowedIncludes()));
     }
 }

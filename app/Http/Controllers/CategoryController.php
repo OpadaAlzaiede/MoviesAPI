@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
         if(!$category) return $this->error(404, 'Not Found !');
 
-        return $this->resource($category->load(Category::getIncludes()));
+        return $this->resource($category->load(Category::allowedIncludes()));
     }
 
     public function store(StoreCategoryRequest $request) {
@@ -49,15 +49,13 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, $id) {
 
-        $this->authorize('update', Category::class);
-
         $category = Category::find($id);
 
         if(!$category) return $this->error(404, 'Not Found !');
 
         $category->update($request->validated());
 
-        return $this->resource($category->load(Category::getIncludes()));
+        return $this->resource($category->load(Category::allowedIncludes()));
     }
 
     public function destroy(DeleteCategoryRequest $request, $id) {

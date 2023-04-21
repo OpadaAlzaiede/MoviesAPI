@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Movie extends Model
 {
@@ -14,6 +15,23 @@ class Movie extends Model
     protected $guarded = ['id', 'rate'];
 
     public $timestamps = false;
+
+    public static function boot() {
+
+        parent::boot();
+
+        self::deleting(function($movie) {
+
+            $attachments = $movie->attachments()->get();
+
+            foreach($attachments as $attachment) {
+
+                Storage::delete($attachment->path);
+            }
+
+            $movie->rates()->delete();
+        });
+    }
 
     public function category() {
 

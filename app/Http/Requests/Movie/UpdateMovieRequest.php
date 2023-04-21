@@ -33,7 +33,7 @@ class UpdateMovieRequest extends FormRequest
             'hours' => ['numeric', 'min:1'],
             'minutes' => ['numeric', 'min:0', 'max:59'],
             'seconds' => ['numeric', 'min:0', 'max:59'],
-            'date' => ['required', 'date'],
+            'date' => ['date'],
             'category_id' => [Rule::exists('categories', 'id')]
         ];
     }
