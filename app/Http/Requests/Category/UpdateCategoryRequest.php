@@ -29,10 +29,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['max:100', Rule::unique('categories', 'name')->ignore($this->route('category'))],
-            'images' => ['array'],
-            'images.*.title' => ['required', 'string', 'max:100'],
-            'images.*.image' => ['required', 'file', 'mimes:jpg,png,jfif', 'max:10000']
+            'name' => ['max:100', Rule::unique('categories', 'name')->ignore($this->route('category'))]
         ];
     }
 }

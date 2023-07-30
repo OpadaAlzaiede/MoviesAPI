@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
     public $timestamps = false;
 
@@ -37,6 +39,13 @@ class Category extends Model
     public function attachments() {
 
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    public function getSlugOptions()
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     public static function allowedIncludes() {

@@ -22,6 +22,7 @@ class CreateMoviesTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->dateTime('date');
             $table->double('rate')->default(0);
+            $table->string('slug');
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->index('category_id');

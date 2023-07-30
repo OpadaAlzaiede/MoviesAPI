@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Movie extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
     protected $guarded = ['id', 'rate'];
 
@@ -52,6 +54,13 @@ class Movie extends Model
 
         $this->rate = ($this->rate + $rate) / 2;
         $this->save();
+    }
+
+    public function getSlugOptions()
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     public static function allowedIncludes() {
