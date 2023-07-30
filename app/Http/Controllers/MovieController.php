@@ -31,17 +31,9 @@ class MovieController extends Controller
 
     public function show($slug) {
 
-        try {
-            $movie = $this->movieRepository->show($slug);
+        $movie = $this->movieRepository->show($slug);
 
-            return $this->resource($movie);
-        }
-        catch (\Exception $e) {
-
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 404);
-        }
+        return $this->resource($movie);
     }
 
     public function store(StoreMovieRequest $request) {

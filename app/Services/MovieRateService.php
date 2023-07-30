@@ -4,5 +4,5 @@ namespace App\Services;
 
 interface MovieRateService {
 
-    public function rate($movie, $rate);
+    public function rate($movie, $user, $rate);
 }
